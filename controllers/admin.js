@@ -1,12 +1,13 @@
 const Driver = require('../models/driver')
 const Passenger = require('../models/passenger')
+const Bookings = require('../models/Bookings')
 
 const Admin = {
     username: process.env.adminName,
     password: process.env.adminPassword
 }
 
-
+// api for admin login
 exports.loginAdmin = (req, res)=>{
     try {
         const { username, password } = req.body
@@ -21,6 +22,7 @@ exports.loginAdmin = (req, res)=>{
 }
 
 
+// api to get all drivers
 exports.getAllDrivers = async(req, res)=>{
     try {
         const result = await Driver.find({})
@@ -35,6 +37,7 @@ exports.getAllDrivers = async(req, res)=>{
     
 }
 
+// api to get a particular driver
 exports.getDriver = async(req, res)=>{
     try {
         const singleDriver = await Driver.findById({_id:req.params.id})
@@ -48,12 +51,13 @@ exports.getDriver = async(req, res)=>{
     }
 }
 
+// api to search for a driver
 exports.searchDriver = async(req, res)=>{
     try {
         const result = await Passenger.findOne({username: req.body.name })
         if (result) {
             res.status(200).send(result)
-        } else {
+        } else { 
             res.status(400).send(error)
         }
     } catch (error) {
@@ -61,6 +65,7 @@ exports.searchDriver = async(req, res)=>{
     }
 }
 
+// api to verify a driver's document
 exports.isVerifiedDriver = async(req, res)=>{
     try {
         const id = req.params.id
@@ -78,6 +83,7 @@ exports.isVerifiedDriver = async(req, res)=>{
     }
 }
 
+// api to delete a driver
 exports.deleteDriver = async(req, res)=>{
     try {
         const result = await Driver.findByIdAndDelete({_id:req.params.id})
@@ -91,6 +97,7 @@ exports.deleteDriver = async(req, res)=>{
     }
 }
 
+//api to get all passengers
 exports.getAllPassengers = async(req, res)=>{
     try {
         const result = await Passenger.find({})
@@ -104,6 +111,7 @@ exports.getAllPassengers = async(req, res)=>{
     }
 }
 
+// api to get a single passenger
 exports.getPassenger = async(req, res)=>{
     try {
         const result = await Passenger.findById({_id:req.params.id})
@@ -114,6 +122,50 @@ exports.getPassenger = async(req, res)=>{
         }
     } catch (error) {
         res.status(500).send(error)
+    }
+}
+
+//api to get all bookings
+exports.getBooking = async(req, res)=>{
+    try {
+        const result = await Bookings.find({})
+        if (result) {
+            res.status(200).send(result)
+        } else {
+            res.status(400).send({error: error.message || "error getting booked ride"})
+        }
+    } catch (error) {
+        res.status(500).send({error: error.message || "server error" })
+    }
+}
+
+
+//api to get all reviews
+exports.getReviews = async(req, res)=>{
+    try {
+        const result = await Bookings.find({}, {cancelledRide: 0, payment: 0, location: 0})
+        if (result) {
+            res.status(200).send(result)
+        } else {
+            res.status(400).send({error: error.message || "cannot get review fields"})
+        }
+    } catch (error) {
+        res.status(500).send({error: error.message || "server error"})
+    }
+}
+
+
+//api to get all payment details
+exports.getPayments = async(req, res)=>{
+    try {
+        const  result = await Bookings.find({}, {payment: 1, createAt: 1})
+        if (result) {
+            res.status(200).send(result)
+        } else {
+           res.status(400).send({error: error.message || "error  getting payment details"}) 
+        }
+    } catch (error) {
+        res.status(500).send({error: error.message || "server error"})
     }
 }
 

@@ -1,93 +1,44 @@
 const mongoose = require('mongoose')
+// const Car = require('./car')
 
 const driverSchema = new mongoose.Schema({
-    username:{
-        type: String,
-        required:[ true, 'Please Enter your username'],
-        trim: true
+    phone_number:{
+        type: Number,
+        required:[true, "please enter your phone number"]
+    },
+    otp:{
+      type: Number  
     },
     email:{
         type: String,
-        required:[true, 'Please insert your password'],
+        unique: true,
         trim: true
+    },
+    firstname:{
+        type: String,
+        trim: true
+    },
+    lastname:{
+        type: String,
+        trim: true
+    },
+    token:{
+        type: String
     },
     password:{
         type: String,
-        required: true,
         trim: true
     },
-    phone_number:{
-        type: Number
-    },
-    licence_number:{
-        type: String,
-        required: true,
-        trim: true
-    },
-    driverLicenseImageUrl:{
-        type: String
-    },
-    carType:{
-        type: String,
-        required: true,
-        trim: true
-    },
-    carModel:{
-        type: String,
-        required: true,
-        trim: true
-    },
-    carYear:{
+    resetOtp:{
         type: Number,
-        required: true
+        default: null
     },
-    carMake:{
+    isLoggedIn:{
+        type: Boolean,
+        default: false
+    },
+    location:{
         type: String,
-        required: true,
-        trim: true
-    },
-    carColor:{
-        type: String,
-        required: true,
-        trim: true
-    },
-    carImageUrl:{
-        type: String
-    },
-    carRegistrationNumber:{
-        type: String,
-        required: true,
-        trim: true
-    },
-    driverImageUrl:{
-        type: String,
-        required: true
-    },
-    carRegistrationCertificateImgUrl:{
-        type: String,
-        required: true
-    },
-    carInsuranceImgUrl:{
-        type: String,
-        required: true
-    },
-    bank_account_name:{
-        type: String,
-        required: true,
-        trim: true
-    },
-    bank_type:{
-        type: String,
-        required: true,
-        trim: true
-    },
-    account_number:{
-        type: Number,
-        required: true
-    },
-    account_type:{
-        type: String,
-        required: true,
         trim: true
     },
     isVerified:{
@@ -97,6 +48,6 @@ const driverSchema = new mongoose.Schema({
 
 }, {timestamps: true})
 
-const Driver = mongoose.model('driver', driverSchema)
+const Driver = mongoose.model('Driver', driverSchema)
 
 module.exports = Driver

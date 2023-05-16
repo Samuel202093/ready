@@ -1,24 +1,49 @@
 const mongoose = require('mongoose')
+const geocoder = require('../utils/geocoder')
 
 const locationSchema = new mongoose.Schema({
-    driverId:{
-        type: Schema.Types.ObjectId,
-        ref: "Driver"
+    passengerId:{
+        type: mongoose.Schema.ObjectId,
+        ref: "Passenger",
+        required: true,
+        trim: true,
+        unique: true
     }, 
-    driverLocations:[
-        {
-            type: {
-                type: String,
-                default: 'Point',
-                enum: ['Point']
-            },
-            coordinates: [ Number ],
-            address: String,
-            Date: Date.now()
-        },
-    ]
-},)
 
-const Location = mongoose.model('location', locationSchema)
+    location:{
+        type:{
+            type: String,
+            enum: ['Point']
+        },
+        coordinates:{
+            type: [Number],
+            index: "2dsphere"
+        },
+        startAddress: {
+            type: String,
+            trim: true
+        },
+        endAddress:{
+            type: String,
+            trim: true
+        }
+    },
+    createdAt:{
+        type: Date,
+        default: Date.now()
+    }
+
+    
+}) 
+
+//Geocode & Create Location
+
+// locationSchema.pre('save', async(next)=>{
+//     const loc = await geocoder.geocode(this.address)
+//     // console.log(loc)
+//     this.lo
+// })
+
+const Location = mongoose.model('L ocation', locationSchema)
 
 module.exports = Location

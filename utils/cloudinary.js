@@ -1,7 +1,8 @@
-const cloudinary = require('cloudinary').v2
-const multer = require('multer')
-const dotenv = require('dotenv').config()
-const path = require('path')
+const cloudinary = require('cloudinary')
+// const multer = require('multer')
+const dotenv = require('dotenv')
+
+dotenv.config()
 
 
 // const upload = multer({
