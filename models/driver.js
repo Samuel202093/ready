@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
-// const Car = require('./car')
+const { ObjectId } = mongoose.Schema
+
 
 const driverSchema = new mongoose.Schema({
     phone_number:{
@@ -32,6 +33,10 @@ const driverSchema = new mongoose.Schema({
     resetOtp:{
         type: Number,
         default: null
+    },
+    isSuspended:{
+        type: Boolean,
+        default: false
     },
     isLoggedIn:{
         type: Boolean,

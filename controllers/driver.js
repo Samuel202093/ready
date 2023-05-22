@@ -1,6 +1,7 @@
 const Driver = require("../models/driver");
 const nodemailer = require("nodemailer");
 const cloudinary = require("../utils/cloudinary");
+const driverDocument = require("../models/driverDocs")
 const dotenv = require("dotenv");
 const otpGenerator = require("otp-generator");
 const client = require("twilio")(
@@ -146,7 +147,7 @@ exports.driverPassword = async(req, res)=>{
     }}, {new: true})
 
     result.password = hashedPassword;
-    
+
     if (result) {
       res.status(200).send(result)
     } else {
@@ -245,6 +246,29 @@ exports.loginDriver = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
+// upload driver document
+exports.driverDoc = async(req, res)=>{
+  try {
+    const { vehicleType, vehicleMake, vehicleModel, vehicleColor, vehicleYear} = req.body
+    const driverDoc = new driverDocument({
+      driverId: req.params.id,
+      vehicleType: vehicleType,
+      vehicleMake: vehicleMake,
+      vehicleModel: vehicleModel,
+      vehicleColor: vehicleColor,
+      vehicleYear: vehicleYear
+    })
+    const result = driverDoc.save()
+    if (result) {
+      res.status(200).send(result)
+    } else {
+      res.status(400).send({error: error.message || "cannot add driver document"})
+    }
+  } catch (error) {
+    res.status(500).send({error: error.message || "server error"})
+  }
+}
 
 //uploading driver documents
 exports.driverDocuments = async (req, res) => {

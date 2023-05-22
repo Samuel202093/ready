@@ -10,14 +10,7 @@ const upload = require('../utils/multer')
 const route = express.Router()
 
 
-//route api for Admin
-// route.post('/admin', adminController.loginAdmin)
-// route.get('/drivers', adminController.getAllDrivers)
-// route.put('/verify-driver', adminController.isVerifiedDriver)
-// route.delete('/driver', adminController.deleteDriver)
-// route.get('/search-driver', adminController.searchDriver)
-// route.get('/passengers', adminController.getAllPassengers)
-// route.get('/passenger', adminController.getPassenger)
+
 
 //Booking Api
 route.post("/booking", bookingController.createBooking )
@@ -50,6 +43,7 @@ route.post("/driver/register", driverController.createDriver)
 route.post("/driver/verify-otp", driverController.verifyDriverOtp)
 route.post("/driver/profile", driverController.driverProfile)
 route.post("/driver/password", driverController.driverPassword)
+route.post("/driver/:id", driverController.driverDoc)
 route.post("/:id", upload.array('images'), driverController.driverDocuments)
 
 

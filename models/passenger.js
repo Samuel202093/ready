@@ -29,6 +29,10 @@ const passengerSchema = new mongoose.Schema({
     type: String,
     trim: true
    },
+   isSuspended:{
+    type: Boolean,
+    default: false
+   },
    payment:{
     mode:{
         type: String

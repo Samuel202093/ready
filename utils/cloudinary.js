@@ -1,11 +1,12 @@
 const cloudinary = require('cloudinary')
-// const multer = require('multer')
 const dotenv = require('dotenv')
+const multer = require("multer")
+
 
 dotenv.config()
 
 
-// const upload = multer({
+// exports.upload = multer({
 //     storage: multer.diskStorage({}),
 //     fileFilter:(req, file, cb)=>{
 //         checkFileType(file, cb)
@@ -46,4 +47,4 @@ exports.uploads = (file, folder)=>{
     })
 }
 
-// module.exports = {cloudinary, uploads}
+// module.exports = cloudinary
